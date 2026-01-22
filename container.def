@@ -1,0 +1,42 @@
+# Use the official NVIDIA CUDA image as the base
+FROM nvidia/cuda:12.1.1-devel-ubuntu20.04
+
+# Set a working directory inside the container
+WORKDIR /opt/GaussianAvatars
+
+# Copy all the files from your local directory into the container's working directory
+COPY . .
+
+# Set up the environment and install dependencies.
+# The `RUN` command combines multiple steps into a single layer for efficiency.
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends wget curl build-essential git python3-distutils python3-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install Miniconda
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    chmod +x Miniconda3-latest-Linux-x86_64.sh && \
+    ./Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda && \
+    rm Miniconda3-latest-Linux-x86_64.sh
+
+# Set the PATH to include Conda
+ENV PATH="/opt/conda/bin:$PATH"
+
+# Accept the Conda Terms of Service for non-interactive builds
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+
+# Create the Conda environment and install all Python packages
+RUN conda create --name gaussian-avatars -y python=3.10 && \
+    /opt/conda/envs/gaussian-avatars/bin/pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121 && \
+    /opt/conda/envs/gaussian-avatars/bin/pip install setuptools==67.8.0 ninja && \
+    /opt/conda/envs/gaussian-avatars/bin/pip install -r requirements.txt
+
+# Set the environment variables for the container
+ENV TORCH_CUDA_ARCH_LIST="8.0"
+ENV PATH="/opt/conda/envs/gaussian-avatars/bin:$PATH"
+ENV LD_LIBRARY_PATH="/opt/conda/envs/gaussian-avatars/lib:/opt/conda/lib:/usr/local/nvidia/lib64:$LD_LIBRARY_PATH"
+
+# Define the default command to run when the container starts
+CMD ["echo", "This is the GaussianAvatars container."]
