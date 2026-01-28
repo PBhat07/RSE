@@ -1,3 +1,16 @@
+# Enhancing 3D Facial Avatars via Novel Regularization:Integrating Depth Loss and Score Distillation Sampling(SDS) with GaussianAvatars
+
+This research focuses on advancing the fidelity and geometric accuracy of 3D facial avatar reconstruction,building upon the GaussianAvatars framework as the core baseline model. The primary objective was to overcome common challenges in geometry and texture quality associated with neural rendering techniques.
+
+## Two key novel regularization terms were introduced and integrated into the optimization process:
+
+• Depth Loss (λdepth): A custom depth loss was implemented to explicitly enforce consistency between the rendered depth map and the Ground Truth (GT) depth data. This directly improved the geometric fidelity and reduced floating artifacts, which is critical for realistic 3D reconstruction. The implementation involved on-demand fetching of GT depth maps for streamlined training.
+
+• Score Distillation Sampling (SDS) Loss (λsds): This loss was added to leverage the generative powerof large text-to-image models, guiding the optimization toward higher-quality, texture-rich, and visually coherent results, particularly improving high-frequency detail. Extensive experiments, visualized and tracked via TensorBoard, were conducted on the modified codebase, including the tuning of both standard 3DGS hyperparameters and the weights (λ) of the new loss terms. The final optimized model demonstrates superior performance metrics and visually verifiable geometric alignment compared to the original baseline, providing a modular and reproducible codebase for future research in neural facial reconstruction.
+
+### Complete technical report : 
+
+
 # GaussianAvatars: Photorealistic Head Avatars with Rigged 3D Gaussians
 
 <div align="center"> 
