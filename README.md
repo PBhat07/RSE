@@ -8,7 +8,7 @@ This research focuses on advancing the fidelity and geometric accuracy of 3D fac
 
 • Score Distillation Sampling (SDS) Loss (λsds): This loss was added to leverage the generative powerof large text-to-image models, guiding the optimization toward higher-quality, texture-rich, and visually coherent results, particularly improving high-frequency detail. Extensive experiments, visualized and tracked via TensorBoard, were conducted on the modified codebase, including the tuning of both standard 3DGS hyperparameters and the weights (λ) of the new loss terms. The final optimized model demonstrates superior performance metrics and visually verifiable geometric alignment compared to the original baseline, providing a modular and reproducible codebase for future research in neural facial reconstruction.
 
-### you can read complete technical report at : RSE/RSE_Report (1).pdf
+### you can read complete technical report at : RSE/RSE_Report (1).pd 
 
 
 # GaussianAvatars: Photorealistic Head Avatars with Rigged 3D Gaussians
